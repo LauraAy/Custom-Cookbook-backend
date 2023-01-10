@@ -1,5 +1,4 @@
 const db = require("../models");
-const recipeRoutes = require("../routes/recipe.routes");
 const Recipe = db.recipes;
 const Op = db.Sequelize.Op;
 
@@ -70,6 +69,7 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
 
 // Update a Recipe by the id in the request
 exports.update = (req, res) => {

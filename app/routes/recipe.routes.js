@@ -10,7 +10,7 @@ module.exports = app => {
     router.get("/", recipes.findAll);
 
     //Retrieve all published Recipes
-    router.get("/:id", recipes.findAllPublished);
+    router.get("/published", recipes.findAllPublished);
 
     //Retrieve a single Recipe with id
     router.get("/:id", recipes.findOne);
