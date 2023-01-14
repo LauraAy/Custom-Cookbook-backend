@@ -16,6 +16,10 @@ exports.create = (req, res) => {
   const recipe = {
     title: req.body.title,
     description: req.body.description,
+    recipeType: req.body.recipeType,
+    servingSize: req.body.servingSize,
+    ingredients: req.body.ingredients,
+    directions: req.body.directions,
     published: req.body.published ? req.body.published : false
   };
 
