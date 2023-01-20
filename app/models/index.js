@@ -1,20 +1,20 @@
-const config = require("../config/db.config.js");
+const dbConfig = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(
-  config.DB,
-  config.USER,
-  config.PASSWORD,
+  dbConfig.DB,
+  dbConfig.USER,
+  dbConfig.PASSWORD,
   {
-    host: config.HOST,
-    dialect: config.dialect,
+    host: dbConfig.HOST,
+    dialect: dbConfig.dialect,
     operatorsAliases: false,
 
     pool: {
-      max: config.pool.max,
-      min: config.pool.min,
-      acquire: config.pool.acquire,
-      idle: config.pool.idle
+      max: dbConfig.pool.max,
+      min: dbConfig.pool.min,
+      acquire: dbConfig.pool.acquire,
+      idle: dbConfig.pool.idle
     }
   }
 );
@@ -28,6 +28,12 @@ db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.recipe = require("../models/recipe.model.js")(sequelize, Sequelize);
 
+db.user.hasMany(db.recipe, { as: "recipe"})
+db.recipe.belongsTo (db.user, {
+  foreignKey: "userId",
+  as: "user",
+});
+
 db.role.belongsToMany(db.user, {
   through: "user_roles",
   foreignKey: "roleId",
@@ -37,12 +43,6 @@ db.user.belongsToMany(db.role, {
   through: "user_roles",
   foreignKey: "userId",
   otherKey: "roleId"
-});
-
-db.user.hasMany(db.recipe, { as: "recipe"})
-db.recipe.belongsTo (db.user, {
-  foreignKey: "userId",
-  as: "user",
 });
 
 db.ROLES = ["user", "admin", "moderator"];

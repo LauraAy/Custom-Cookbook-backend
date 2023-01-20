@@ -1,5 +1,6 @@
 const db = require("../models");
-const Recipe = db.recipes;
+const User = db.user;
+const Recipe = db.recipe;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Recipe
@@ -20,7 +21,7 @@ exports.create = (req, res) => {
     servingSize: req.body.servingSize,
     ingredients: req.body.ingredients,
     directions: req.body.directions,
-    published: req.body.published ? req.body.published : false
+    published: req.body.published ? req.body.published : false,
   };
 
   // Save Recipe in the database
@@ -57,7 +58,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Recipe.findByPk(id)
+  Recipe.findByPk(id, { include: ["user"] })
     .then(data => {
       if (data) {
         res.send(data);
