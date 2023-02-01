@@ -1,6 +1,6 @@
 const db = require("../models");
-const User = db.user;
-const Recipe = db.recipe;
+const User = db.users;
+const Recipe = db.recipes;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Recipe
@@ -22,6 +22,7 @@ exports.create = (req, res) => {
     ingredients: req.body.ingredients,
     directions: req.body.directions,
     published: req.body.published ? req.body.published : false,
+   userId: req.body.userId
   };
 
   // Save Recipe in the database

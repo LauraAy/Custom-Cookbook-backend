@@ -24,22 +24,22 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("../models/user.model.js")(sequelize, Sequelize);
-db.role = require("../models/role.model.js")(sequelize, Sequelize);
-db.recipe = require("../models/recipe.model.js")(sequelize, Sequelize);
+db.users = require("../models/user.model.js")(sequelize, Sequelize);
+db.roles = require("../models/role.model.js")(sequelize, Sequelize);
+db.recipes = require("../models/recipe.model.js")(sequelize, Sequelize);
 
-db.user.hasMany(db.recipe, { as: "recipe"})
-db.recipe.belongsTo (db.user, {
+db.users.hasMany(db.recipes, { as: "recipes" });
+db.recipes.belongsTo (db.users, {
   foreignKey: "userId",
-  as: "user",
+  as: "users",
 });
 
-db.role.belongsToMany(db.user, {
+db.roles.belongsToMany(db.users, {
   through: "user_roles",
   foreignKey: "roleId",
   otherKey: "userId"
 });
-db.user.belongsToMany(db.role, {
+db.users.belongsToMany(db.roles, {
   through: "user_roles",
   foreignKey: "userId",
   otherKey: "roleId"
