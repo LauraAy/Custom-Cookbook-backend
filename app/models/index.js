@@ -27,6 +27,7 @@ db.sequelize = sequelize;
 db.users = require("../models/user.model.js")(sequelize, Sequelize);
 db.roles = require("../models/role.model.js")(sequelize, Sequelize);
 db.recipes = require("../models/recipe.model.js")(sequelize, Sequelize);
+db.creators = require("../models/creator.model.js")(sequelize, Sequelize);
 
 db.users.hasMany(db.recipes, { as: "recipes" });
 db.recipes.belongsTo (db.users, {

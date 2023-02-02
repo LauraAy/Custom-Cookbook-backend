@@ -1,4 +1,4 @@
-const { INTEGER } = require("sequelize");
+const { INTEGER, STRING, TEXT } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
   const Recipe = sequelize.define("recipe", {
@@ -18,6 +18,9 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.TEXT
     },
     directions: {
+      type: Sequelize.TEXT
+    },
+    source: {
       type: Sequelize.TEXT
     },
     published: {
