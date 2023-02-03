@@ -35,24 +35,24 @@ db.regions = require("../models/region.model.js")(sequelize, Sequelize);
 db.recipes.belongsToMany(db.regions, {
   through: "region_recipe",
   as: "regions",
-  foreignKey: "recipe_id",
+  foreignKey: "recipeId",
 });
 db.regions.belongsToMany(db.recipes, {
   through: "region_recipe",
   as: "recipes",
-  foreignKey: "region_id",
+  foreignKey: "regionId",
 });
 
 //Many to many relationship between recipes and creators.
 db.recipes.belongsToMany(db.creators, {
   through: "creator_recipe",
   as: "creators",
-  foreignKey: "recipe_id",
+  foreignKey: "recipeId",
 });
 db.creators.belongsToMany(db.recipes, {
   through: "creator_recipe",
   as: "recipes",
-  foreignKey: "creator_id",
+  foreignKey: "creatorId",
 });
 
 

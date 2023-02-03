@@ -22,7 +22,7 @@ exports.create = (req, res) => {
     ingredients: req.body.ingredients,
     directions: req.body.directions,
     published: req.body.published ? req.body.published : false,
-   userId: req.body.userId
+    userId: req.body.userId
   };
 
   // Save Recipe in the database
@@ -144,7 +144,7 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// find all published Recipe
+// find all published Recipes
 exports.findAllPublished = (req, res) => {
   Recipe.findAll({ where: { published: true } })
     .then(data => {
@@ -158,4 +158,23 @@ exports.findAllPublished = (req, res) => {
     });
 };
 
+//Find creators with recipeId
+exports.findRecipeCreators= (req, res) => {
+  const id = req.params.id;
+Recipe.findByPk(id, { include: ["creators"] })
+.then(data => {
+if (data) {
+  res.send(data);
+} else {
+  res.status(404).send({
+    message: `Cannot find Recipe with id=${id}.`
+  });
+}
+})
+.catch(err => {
+res.status(500).send({
+  message: "Error retrieving Recipe with id=" + id
+});
+});
+};
 
