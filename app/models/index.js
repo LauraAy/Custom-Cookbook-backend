@@ -28,13 +28,42 @@ db.users = require("../models/user.model.js")(sequelize, Sequelize);
 db.roles = require("../models/role.model.js")(sequelize, Sequelize);
 db.recipes = require("../models/recipe.model.js")(sequelize, Sequelize);
 db.creators = require("../models/creator.model.js")(sequelize, Sequelize);
+db.regions = require("../models/region.model.js")(sequelize, Sequelize);
 
+
+//Many to many relationship between recipes and regions.
+db.recipes.belongsToMany(db.regions, {
+  through: "region_recipe",
+  as: "regions",
+  foreignKey: "recipe_id",
+});
+db.regions.belongsToMany(db.recipes, {
+  through: "region_recipe",
+  as: "recipes",
+  foreignKey: "region_id",
+});
+
+//Many to many relationship between recipes and creators.
+db.recipes.belongsToMany(db.creators, {
+  through: "creator_recipe",
+  as: "creators",
+  foreignKey: "recipe_id",
+});
+db.creators.belongsToMany(db.recipes, {
+  through: "creator_recipe",
+  as: "recipes",
+  foreignKey: "creator_id",
+});
+
+
+//One to many relationship between user and recipes.
 db.users.hasMany(db.recipes, { as: "recipes" });
 db.recipes.belongsTo (db.users, {
   foreignKey: "userId",
   as: "users",
 });
 
+//Many to many relationship between users and roles.
 db.roles.belongsToMany(db.users, {
   through: "user_roles",
   foreignKey: "roleId",
