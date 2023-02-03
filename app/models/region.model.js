@@ -22,6 +22,5 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.DECIMAL(9,6)
     }
   });
-  
   return Region;
 };

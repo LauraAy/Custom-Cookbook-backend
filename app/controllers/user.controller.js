@@ -1,6 +1,5 @@
 const db = require("../models");
 const User = db.users;
-const Recipe = db.recipes;
 const Op = db.Sequelize.Op;
 
 exports.allAccess = (req, res) => {

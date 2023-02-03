@@ -28,8 +28,6 @@ db.users = require("../models/user.model.js")(sequelize, Sequelize);
 db.roles = require("../models/role.model.js")(sequelize, Sequelize);
 db.recipes = require("../models/recipe.model.js")(sequelize, Sequelize);
 db.creators = require("../models/creator.model.js")(sequelize, Sequelize);
-db.regions = require("../models/region.model.js")(sequelize, Sequelize);
-
 
 //Many to many relationship between recipes and regions.
 db.recipes.belongsToMany(db.regions, {
@@ -63,7 +61,7 @@ db.recipes.belongsTo (db.users, {
   as: "users",
 });
 
-//Many to many relationship between users and roles.
+//Many to many relationship between user and roles.
 db.roles.belongsToMany(db.users, {
   through: "user_roles",
   foreignKey: "roleId",

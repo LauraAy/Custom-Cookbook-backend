@@ -23,7 +23,7 @@ module.exports = app => {
 
     //
     //Retrieve recipes with creator id
-    router.get("/recipes/:id", creators.findCreatorRecipes)   
+    router.get("/creators/:id", creators.findCreatorRecipes)   
 
     app.use('/api/creators', router);
 };

@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const db = require("./app/models");
+const { INITIALLY_DEFERRED } = require("sequelize/types/deferrable");
 const Role = db.role; 
 
 db.sequelize.sync()
@@ -29,7 +30,7 @@ db.sequelize.sync()
 // // drop the table if it already exists
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log("Drop and re-sync db.");
-//   initial();
+//   // initial();
 // });
 
 // simple route
@@ -42,13 +43,6 @@ require("./app/routes/recipe.routes")(app);
 require('./app/routes/auth.routes')(app);
 require('./app/routes/userRole.routes')(app);
 require('./app/routes/user.routes')(app);
-
-
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
 
 function initial() {
   Role.create({
@@ -66,4 +60,10 @@ function initial() {
     name: "admin"
   });
 }
+
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
 
