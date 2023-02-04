@@ -22,7 +22,8 @@ exports.create = (req, res) => {
     ingredients: req.body.ingredients,
     directions: req.body.directions,
     published: req.body.published ? req.body.published : false,
-    userId: req.body.userId
+    userId: req.body.userId,
+    creatorId: req.body.userId
   };
 
   // Save Recipe in the database
@@ -158,6 +159,8 @@ exports.findAllPublished = (req, res) => {
     });
 };
 
+
+
 //Find creators with recipeId
 exports.findRecipeCreators= (req, res) => {
   const id = req.params.id;
@@ -177,4 +180,6 @@ res.status(500).send({
 });
 });
 };
+
+
 

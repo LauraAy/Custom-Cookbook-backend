@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const db = require("./app/models");
-const { INITIALLY_DEFERRED } = require("sequelize/types/deferrable");
+// const { INITIALLY_DEFERRED } = require("sequelize/types/deferrable");
 const Role = db.role; 
 
 db.sequelize.sync()
@@ -43,6 +43,9 @@ require("./app/routes/recipe.routes")(app);
 require('./app/routes/auth.routes')(app);
 require('./app/routes/userRole.routes')(app);
 require('./app/routes/user.routes')(app);
+require('./app/routes/creator.routes')(app);
+require('./app/routes/creator-recipe.routes')(app);
+
 
 function initial() {
   Role.create({
