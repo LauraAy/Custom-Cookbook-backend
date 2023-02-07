@@ -1,6 +1,7 @@
 const db = require("../models");
-const User = db.users;
-const Recipe = db.recipes;
+const User = db.user;
+const Recipe = db.recipe;
+const Creator = db.creator
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Recipe
@@ -157,6 +158,30 @@ exports.findAllPublished = (req, res) => {
           err.message || "Some error occurred while retrieving Recipes."
       });
     });
+};
+
+//add a recipe to a creator
+exports.addCreator = (recipeId, creatorId)  => {
+  return Recipe.findByPk(recipeId)
+  .then((recipe) => {
+      if (!recipe) {
+          console.log('Recipe not found!');
+          return null;
+      }
+  return Creator.findByPk(creatorId).then((creator) => {
+      if (!creator) {
+          console.log("Creator not found!");
+          return null;
+      }
+
+      recipe.addCreator(creator);
+      console.log(`>> added Recipe id=${recipe.id} to Creator id=${creator.id}`);
+      return recipe;
+    });
+  })
+  .catch((err) => {
+    console.log(">> Error while adding Creator to Recipe: ", err);
+  })
 };
 
 

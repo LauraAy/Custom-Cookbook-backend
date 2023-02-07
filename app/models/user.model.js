@@ -1,7 +1,7 @@
 const { INTEGER } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define("user", {
+    const User = sequelize.define("users", {
       username: {
         type: Sequelize.STRING
       },

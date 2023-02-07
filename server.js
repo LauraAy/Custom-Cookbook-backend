@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-
 const app = express();
+
 
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -16,8 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const db = require("./app/models");
-// const { INITIALLY_DEFERRED } = require("sequelize/types/deferrable");
+// const { sequelize } = require("./app/models");
 const Role = db.role; 
+const RecipeController = require("./app/controllers/recipe.controller.js");
 
 db.sequelize.sync()
   .then(() => {
@@ -27,10 +28,15 @@ db.sequelize.sync()
     console.log("Failed to sync db: " + err.message);
   });
 
+  const run = async () => {
+  await RecipeController.addCreator(1, 1);
+};
+
+
 // // drop the table if it already exists
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log("Drop and re-sync db.");
-//   // initial();
+//   initial();
 // });
 
 // simple route
@@ -44,7 +50,7 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/userRole.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/creator.routes')(app);
-require('./app/routes/creator-recipe.routes')(app);
+
 
 
 function initial() {
