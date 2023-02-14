@@ -18,7 +18,21 @@ app.use(express.urlencoded({ extended: true }));
 const db = require("./app/models");
 // const { sequelize } = require("./app/models");
 const Role = db.role; 
-const RecipeController = require("./app/controllers/recipe.controller.js");
+const recipeController = require("./app/controllers/recipe.controller.js");
+
+
+
+const run = async () => {
+
+  // //add creator to recipe test
+  // await recipeController.addCreator(2, 1);
+
+//add recipe test
+//   const rec3 = await controller.createRecipe({
+//     title: "Pot Roast",
+//     description: "Classic comfort food",
+//   });
+};
 
 db.sequelize.sync()
   .then(() => {
@@ -27,10 +41,7 @@ db.sequelize.sync()
   .catch((err) => {
     console.log("Failed to sync db: " + err.message);
   });
-
-  const run = async () => {
-  await RecipeController.addCreator(1, 1);
-};
+  run();
 
 
 // // drop the table if it already exists

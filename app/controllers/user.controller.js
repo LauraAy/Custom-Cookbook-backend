@@ -54,7 +54,7 @@ exports.findAll = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Recipe with id=" + id
+          message: "Error retrieving User with id=" + id
         });
       });
   };

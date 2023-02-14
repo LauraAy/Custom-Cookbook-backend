@@ -30,29 +30,43 @@ db.recipe = require("../models/recipe.model.js")(sequelize, Sequelize);
 db.creator = require("../models/creator.model.js")(sequelize, Sequelize);
 db.region = require("../models/region.model.js")(sequelize, Sequelize);
 
-//Many to many relationship between recipes and regions.
-db.recipe.belongsToMany(db.region, {
-  through: "region_recipe",
-  as: "regions",
-  foreignKey: "recipeId",
-});
-db.region.belongsToMany(db.recipe, {
-  through: "region_recipe",
-  as: "recipes",
+//One to many relationship between regions and recipes.
+db.region.hasMany(db.recipe, { as: "recipes" });
+db.recipe.belongsTo (db.region, {
   foreignKey: "regionId",
+  as: "regions",
 });
 
-//Many to many relationship between recipes and creators.
-db.recipe.belongsToMany(db.creator, {
-  through: "creator_recipe",
-  as: "creators",
-  foreignKey: "recipeId",
-});
-db.creator.belongsToMany(db.recipe, {
-  through: "creator_recipe",
-  as: "recipes",
+// //Many to many relationship between recipes and regions.
+// db.recipe.belongsToMany(db.region, {
+//   through: "region_recipe",
+//   as: "regions",
+//   foreignKey: "recipeId",
+// });
+// db.region.belongsToMany(db.recipe, {
+//   through: "region_recipe",
+//   as: "recipes",
+//   foreignKey: "regionId",
+// });
+
+//One to many relationship between creators and recipes.
+db.creator.hasMany(db.recipe, { as: "recipes" });
+db.recipe.belongsTo (db.creator, {
   foreignKey: "creatorId",
+  as: "creators",
 });
+
+// //one to many relationship for creators and recipes
+// db.recipe.belongsToMany(db.creator, {
+//   through: "creator_recipe",
+//   as: "creators",
+//   foreignKey: "recipeId",
+// });
+// db.creator.belongsToMany(db.recipe, {
+//   through: "creator_recipe",
+//   as: "recipes",
+//   foreignKey: "creatorId",
+// });
 
 
 //One to many relationship between user and recipes.

@@ -131,22 +131,22 @@ exports.deleteAll = (req, res) => {
 };
 
 
-//Find creators with recipeId
+//Find recipes with creatorId
 exports.findCreatorRecipes= (req, res) => {
-    const id = req.params.id;
-  Creator.findByPk(id, { include: ["recipes"] })
-  .then(data => {
-  if (data) {
-    res.send(data);
-  } else {
-    res.status(404).send({
-      message: `Cannot find Creator with id=${id}.`
-    });
-  }
-  })
-  .catch(err => {
-  res.status(500).send({
-    message: "Error retrieving Creator with id=" + id
+  const id = req.params.id;
+Creator.findByPk(id, { include: ["recipes"] })
+.then(data => {
+if (data) {
+  res.send(data);
+} else {
+  res.status(404).send({
+    message: `Cannot find Creator with id=${id}.`
   });
-  });
-  };
+}
+})
+.catch(err => {
+res.status(500).send({
+  message: "Error retrieving Creator with id=" + id
+});
+});
+};
