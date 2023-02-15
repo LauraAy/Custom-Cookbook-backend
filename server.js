@@ -58,11 +58,9 @@ app.get("/", (req, res) => {
 //routes
 require("./app/routes/recipe.routes")(app);
 require('./app/routes/auth.routes')(app);
-require('./app/routes/userRole.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/creator.routes')(app);
-
-
+require("./app/routes/region.routes")(app);
 
 function initial() {
   Role.create({

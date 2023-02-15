@@ -4,13 +4,13 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Region
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-    return;
-  }
+//   // Validate request
+//   if (!req.body.regionName) {
+//     res.status(400).send({
+//       message: "Content can not be empty!"
+//     });
+//     return;
+//   }
 
   const region = {
     regionName: req.body.regionName,
