@@ -3,25 +3,25 @@ module.exports = app => {
     
     var router = require("express").Router();
 
-    //Create a new Creator
+    //Create a new Region
     router.post("/", regions.create);
 
-    //Retrieve all Creators
+    //Retrieve all Regions
     router.get("/", regions.findAll);
 
-    //Retrieve a single Creator with id
+    //Retrieve a single Region with id
     router.get("/:id", regions.findOne);
 
-    //Update a Creator with id
+    //Update a Region with id
     router.put("/:id", regions.update);
 
-    //Delete a Creator with id
+    //Delete a Region with id
     router.delete("/:id", regions.delete);
 
-    //Delete all Recipes
+    //Delete all Regions
     router.delete("/", regions.deleteAll);
 
-    //Retrieve recipes with creator id
+    //Retrieve recipes with region id
     router.get("/recipes/:id", regions.findRegionRecipes);
 
 

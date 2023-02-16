@@ -36,10 +36,8 @@ Region.create(region)
 
 // Retrieve all Regions from the database.
 exports.findAll = (req, res) => {
-  const title = req.query.regionName;
-  var condition = regionName ? { regionName: { [Op.like]: `%${regionName}%` } } : null;
 
-  Region.findAll({ where: condition })
+  Region.findAll ()
     .then(data => {
       res.send(data);
     })
