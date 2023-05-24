@@ -24,6 +24,5 @@ module.exports = app => {
     //Retrieve recipes with region id
     router.get("/recipes/:id", regions.findRegionRecipes);
 
-
     app.use('/api/regions', router);
 };

@@ -18,6 +18,9 @@ module.exports = app => {
     //Update a Recipe with id
     router.put("/:id", recipes.update);
 
+    //Add Region to Recipe
+    router.put("/addregion/:id", recipes.update);
+
     //Delete a Recipe with id
     router.delete("/:id", recipes.delete);
 
