@@ -1,4 +1,4 @@
-const { DECIMAL, STRING } = require("sequelize");
+const { DECIMAL, STRING, INTEGER } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
   const Region = sequelize.define("region", {
@@ -14,6 +14,12 @@ module.exports = (sequelize, Sequelize) => {
     },
     country: {
       type: Sequelize.STRING
+    },
+    alpha2Code: {
+      type: Sequelize.INTEGER
+    },
+    alpha3Code: {
+      type: Sequelize.INTEGER
     },
     lat: {
       type: Sequelize.DECIMAL(8,6)
