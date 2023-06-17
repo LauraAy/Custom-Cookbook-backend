@@ -1,5 +1,6 @@
 const db = require("../models");
 const Region = db.region;
+const Recipe = db.recipe;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Region
@@ -170,4 +171,28 @@ exports.findRegionRecipes= (req, res) => {
     message: "Error retrieving Region with id=" + id
   });
   });
+  };
+
+  //Add recipe to region
+  exports.addRecipe = (regionId, recipeId) => {
+    return Region.findByPk(regionId)
+      .then((region) => {
+        if (!region) {
+          console.log("Region not found!");
+          return null;
+        }
+        return Recipe.findByPk(recipeId).then((recipe) => {
+          if (!recipe) {
+            console.log("Tutorial not found!");
+            return null;
+          }
+  
+          region.addRecipe(recipe);
+          console.log(`>> added Recipe id=${recipe.id} to Region id=${region.id}`);
+          return region;
+        });
+      })
+      .catch((err) => {
+        console.log(">> Error while adding Recipe to Region: ", err);
+      });
   };

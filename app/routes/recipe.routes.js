@@ -15,6 +15,9 @@ module.exports = app => {
     //Retrieve a single Recipe with id
     router.get("/:id", recipes.findOne);
 
+    //Retrieve a single Recipe with regions
+    router.get("/regions/:id", recipes.findWithRegions);
+
     //Update a Recipe with id
     router.put("/:id", recipes.update);
 

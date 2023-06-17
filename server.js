@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const RegionController = require("./app/controllers/region.controller.js")
 
 
 var corsOptions = {
@@ -24,6 +25,19 @@ const recipeController = require("./app/controllers/recipe.controller.js");
 
 const run = async () => {
 
+// await RegionController.addRecipe(1, 1);
+// // >> added Tutorial id=1 to Tag id=1
+
+// await RegionController.addRecipe(1, 2);
+// // >> added Tutorial id=2 to Tag id=1
+
+// await RegionController.addRecipe(1, 3);
+// // >> added Tutorial id=3 to Tag id=1
+
+// await RegionController.addRecipe(2, 3);
+
+// >> added Tutorial id=3 to Tag id=2
+
   // //add creator to recipe test
   // await recipeController.addCreator(2, 1);
 
@@ -41,11 +55,11 @@ db.sequelize.sync()
   .catch((err) => {
     console.log("Failed to sync db: " + err.message);
   });
-  // run();
+  run();
   // initial();
 
 
-// // drop the table if it already exists
+// drop the table if it already exists
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log("Drop and re-sync db.");
 //   initial();
@@ -63,22 +77,22 @@ require('./app/routes/user.routes')(app);
 require('./app/routes/creator.routes')(app);
 require("./app/routes/region.routes")(app);
 
-function initial() {
-  Role.create({
-    id: 1,
-    name: "user"
-  });
+// function initial() {
+//   Role.create({
+//     id: 1,
+//     name: "user"
+//   });
 
-  Role.create({
-    id: 2,
-    name: "moderator"
-  });
+//   Role.create({
+//     id: 2,
+//     name: "moderator"
+//   });
 
-  Role.create({
-    id: 3,
-    name: "admin"
-  });
-}
+//   Role.create({
+//     id: 3,
+//     name: "admin"
+//   });
+// }
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

@@ -1,5 +1,6 @@
 const db = require("../models");
 const Recipe = db.recipe;
+const Region = db.region;
 const Creator = db.creator
 const Op = db.Sequelize.Op;
 
@@ -78,6 +79,26 @@ exports.findOne = (req, res) => {
         message: "Error retrieving Recipe with id=" + id
       });
     });
+};
+
+//Find recipe with regions
+exports.findWithRegions= (req, res) => {
+  const id = req.params.id;
+Recipe.findByPk(id, { include: ["regions"] })
+.then(data => {
+if (data) {
+  res.send(data);
+} else {
+  res.status(404).send({
+    message: `Cannot find Rrecipe with id=${id}.`
+  });
+}
+})
+.catch(err => {
+res.status(500).send({
+  message: "Error retrieving Recipe with id=" + id
+});
+});
 };
 
 
@@ -160,30 +181,6 @@ exports.findAllPublished = (req, res) => {
           err.message || "Some error occurred while retrieving Recipes."
       });
     });
-};
-
-exports.addCreator = (req, res)  => {
-
-  return Recipe.findByPk(recipeId)
-  .then((recipe) => {
-      if (!recipe) {
-          console.log('Recipe not found!');
-          return null;
-      }
-  return Creator.findByPk(creatorId).then((creator) => {
-      if (!creator) {
-          console.log("Creator not found!");
-          return null;
-      }
-
-      recipe.addCreator(creator);
-      console.log(`>> added Recipe id=${recipe.id} to Creator id=${creator.id}`);
-      return recipe;
-    });
-  })
-  .catch((err) => {
-    console.log(">> Error while adding Creator to Recipe: ", err);
-  })
 };
 
 //add a recipe to a creator
