@@ -1,17 +1,11 @@
 const db = require("../models");
 const Region = db.region;
 const Recipe = db.recipe;
+const RegionRecipe = db.region_recipe;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Region
 exports.create = (req, res) => {
-//   // Validate request
-//   if (!req.body.regionName) {
-//     res.status(400).send({
-//       message: "Content can not be empty!"
-//     });
-//     return;
-//   }
 
   const region = {
     regionName: req.body.regionName,
@@ -22,8 +16,30 @@ exports.create = (req, res) => {
     lng: req.body.lng,
   };
 
+
   // Save Region in the database
 Region.create(region)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Region."
+      });
+    });
+};
+
+exports.createRegionRecipe = (req, res) => {
+
+  const regionRecipe = {
+    regionId: req.body.regionId,
+    recipeId: req.body.recipeId
+  };
+
+
+  // Save Region in the database
+RegionRecipe.create(regionRecipe)
     .then(data => {
       res.send(data);
     })
@@ -174,22 +190,27 @@ exports.findRegionRecipes= (req, res) => {
   };
 
   //Add recipe to region
-  exports.addRecipe = (regionId, recipeId) => {
+  exports.addRecipe = (req, res) => {
+    const regionId = req.body.regionId;
+    const recipeId = req.body.recipeId;
+    
     return Region.findByPk(regionId)
-      .then((region) => {
-        if (!region) {
-          console.log("Region not found!");
+    .then((region) => {
+      if (!region) {
+        console.log("Region not found!");
+        return null;
+      }
+      return Recipe.findByPk(recipeId)
+      .then((recipe) => {
+        if (!recipe) {
+          console.log("Recipe not found!");
           return null;
         }
-        return Recipe.findByPk(recipeId).then((recipe) => {
-          if (!recipe) {
-            console.log("Tutorial not found!");
-            return null;
-          }
-  
-          region.addRecipe(recipe);
+        return region.addRecipe(recipe);
           console.log(`>> added Recipe id=${recipe.id} to Region id=${region.id}`);
-          return region;
+          res.send({
+            message: "Region was deleted successfully!"
+          });
         });
       })
       .catch((err) => {

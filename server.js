@@ -25,16 +25,16 @@ const recipeController = require("./app/controllers/recipe.controller.js");
 
 const run = async () => {
 
-// await RegionController.addRecipe(1, 1);
+// await RegionController.addRecipeRegion(1, 1);
 // // >> added Tutorial id=1 to Tag id=1
 
-// await RegionController.addRecipe(1, 2);
+// await RegionController.addRecipeRegion(1, 2);
 // // >> added Tutorial id=2 to Tag id=1
 
-// await RegionController.addRecipe(1, 3);
+// await RegionController.addRecipeRegion(1, 3);
 // // >> added Tutorial id=3 to Tag id=1
 
-// await RegionController.addRecipe(2, 3);
+// await RegionController.addRecipeRegion(2, 3);
 
 // >> added Tutorial id=3 to Tag id=2
 
@@ -48,22 +48,21 @@ const run = async () => {
 //   });
 };
 
-db.sequelize.sync()
-  .then(() => {
-    console.log("Synced db.");
-  })
-  .catch((err) => {
-    console.log("Failed to sync db: " + err.message);
-  });
-  run();
+// db.sequelize.sync()
+//   .then(() => {
+//     console.log("Synced db.");
+//   })
+//   .catch((err) => {
+//     console.log("Failed to sync db: " + err.message);
+//   });
+//   run();
   // initial();
 
 
 // drop the table if it already exists
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-//   initial();
-// });
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 
 // simple route
 app.get("/", (req, res) => {

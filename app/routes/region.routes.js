@@ -24,5 +24,8 @@ module.exports = app => {
     //Retrieve recipes with region id
     router.get("/recipes/:id", regions.findRegionRecipes);
 
+    //add recipe to region
+    router.post("/addRecipes", regions.createRegionRecipe);
+
     app.use('/api/regions', router);
 };
