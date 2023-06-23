@@ -168,18 +168,40 @@ exports.findAllPublished = (req, res) => {
     });
 };
 
-//Find  all recipes with regionId
-exports.findRegionRecipes = (req, res) => {
+// Find  all recipes with regions
+// exports.findRegionRecipes = (req, res) => {
+//   RegionRecipe.findAll ({
+//       attributes: ["id"], include: [ 
+//         {
+//         model: Region,
+//         as: "region",
+//         attributes: ['country', 'regionName'],
+//       }, {
+//         model: Recipe,
+//         as: "recipe",
+//         attributes: ['title']
+//       }],
+// })
+//       .then(data => {
+//         res.send(data);
+//       })
+//       .catch(err => {
+//         res.status(500).send({
+//           message:
+//             err.message || "Some error occurred while retrieving Recipes."
+//         });
+//       });
+//   };
 
-    RegionRecipe.findAll (
-    //   include: [{
-    //     model: Region,
-    //     attributes: ['country', 'regionName'],
-    //   }, {
-    //     model: Recipe,
-    //     attributes: ['name'],
-    //   }],
-    )
+exports.findRegionRecipes = (req, res) => {
+  Region.findAll ({
+      attributes: ["country", "regionName"], include: [ 
+       {
+        model: Recipe,
+        as: "recipe",
+        attributes: ['title']
+      }],
+})
       .then(data => {
         res.send(data);
       })
@@ -192,23 +214,28 @@ exports.findRegionRecipes = (req, res) => {
   };
 
 // exports.findRegionRecipes= (req, res) => {
-//     const id = req.params.id;
-//   Region.findByPk(id, { include: ["recipes"] })
-//   .then(data => {
-//   if (data) {
-//     res.send(data);
-//   } else {
-//     res.status(404).send({
-//       message: `Cannot find Region with id=${id}.`
-//     });
-//   }
+//     // const id = req.params.id;
+//   Region.findAll({ 
+//     include: [
+//     {
+//       model: Recipe,
+//       as: "recipes",
+//       attributes: ["id", "title", "description"],
+//       through: {
+//         attributes: [],
+//       }
+//     }
+//   ] 
+// })
+//   .then((regions) => {
+//     return regions;
 //   })
-//   .catch(err => {
+//   .catch((err) => {
 //   res.status(500).send({
-//     message: "Error retrieving Region with id=" + id
+//     message: "It didn't work. :("
 //   });
-//   });
-//   };
+//   })
+// }
 
   //Add recipe to region
   exports.addRecipe = (req, res) => {

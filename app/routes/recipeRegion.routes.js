@@ -4,11 +4,8 @@ module.exports = app => {
     
     var router = require("express").Router();
 
-    //Create a new Region
-    router.post("/", regions.create);
-
     //Retrieve all Regions
-    router.get("/", recipes.findAll);
+    router.get("/", regions.findRegionRecipes);
 
     app.use('/api/recipeRegions', router);
 };

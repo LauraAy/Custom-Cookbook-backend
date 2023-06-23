@@ -42,10 +42,10 @@ const run = async () => {
   // await recipeController.addCreator(2, 1);
 
 //add recipe test
-//   const rec3 = await controller.createRecipe({
-//     title: "Pot Roast",
-//     description: "Classic comfort food",
-//   });
+  // const rec3 = await controller.createRecipe({
+  //   title: "Pot Roast",
+  //   description: "Classic comfort food",
+  // });
 };
 
 db.sequelize.sync()
@@ -56,7 +56,7 @@ db.sequelize.sync()
     console.log("Failed to sync db: " + err.message);
   });
   run();
-  // initial();
+
 
 
 // drop the table if it already exists
