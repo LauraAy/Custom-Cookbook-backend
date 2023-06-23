@@ -37,9 +37,8 @@ exports.createRegionRecipe = (req, res) => {
     recipeId: req.body.recipeId
   };
 
-
   // Save Region in the database
-RegionRecipe.create(regionRecipe)
+  RegionRecipe.create(regionRecipe)
     .then(data => {
       res.send(data);
     })
@@ -169,25 +168,47 @@ exports.findAllPublished = (req, res) => {
     });
 };
 
-//Find recipes with regionId
-exports.findRegionRecipes= (req, res) => {
-    const id = req.params.id;
-  Region.findByPk(id, { include: ["recipes"] })
-  .then(data => {
-  if (data) {
-    res.send(data);
-  } else {
-    res.status(404).send({
-      message: `Cannot find Region with id=${id}.`
-    });
-  }
-  })
-  .catch(err => {
-  res.status(500).send({
-    message: "Error retrieving Region with id=" + id
-  });
-  });
+//Find  all recipes with regionId
+exports.findRegionRecipes = (req, res) => {
+
+    RegionRecipe.findAll (
+    //   include: [{
+    //     model: Region,
+    //     attributes: ['country', 'regionName'],
+    //   }, {
+    //     model: Recipe,
+    //     attributes: ['name'],
+    //   }],
+    )
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving Recipes."
+        });
+      });
   };
+
+// exports.findRegionRecipes= (req, res) => {
+//     const id = req.params.id;
+//   Region.findByPk(id, { include: ["recipes"] })
+//   .then(data => {
+//   if (data) {
+//     res.send(data);
+//   } else {
+//     res.status(404).send({
+//       message: `Cannot find Region with id=${id}.`
+//     });
+//   }
+//   })
+//   .catch(err => {
+//   res.status(500).send({
+//     message: "Error retrieving Region with id=" + id
+//   });
+//   });
+//   };
 
   //Add recipe to region
   exports.addRecipe = (req, res) => {
