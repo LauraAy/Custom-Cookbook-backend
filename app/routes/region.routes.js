@@ -21,11 +21,6 @@ module.exports = app => {
     //Delete all Regions
     router.delete("/", regions.deleteAll);
 
-    //Retrieve recipes with region id
-    router.get("/recipeRegions", regions.findAll);
-
-    //add recipe to region
-    router.post("/addRecipes", regions.createRegionRecipe);
 
     app.use('/api/regions', router);
 };

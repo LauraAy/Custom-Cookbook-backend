@@ -24,30 +24,16 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("../models/user.model.js")(sequelize, Sequelize);
-db.role = require("../models/role.model.js")(sequelize, Sequelize);
-db.recipe = require("../models/recipe.model.js")(sequelize, Sequelize);
 db.creator = require("../models/creator.model.js")(sequelize, Sequelize);
+db.pairing = require("/models/pairing.model.js")(sequelize, Sequelize);
+db.recipe = require("../models/recipe.model.js")(sequelize, Sequelize);
+db.region_recipe = require("../models/region_recipe.model.js")(sequelize, Sequelize);
 db.region = require("../models/region.model.js")(sequelize, Sequelize);
 db.stateProvince = require("../models/stateProvince.model.js")(sequelize, Sequelize);
-db.region_recipe = require("../models/region_recipe.model.js")(sequelize, Sequelize)
+db.user = require("../models/user.model.js")(sequelize, Sequelize);
+db.role = require("../models/role.model.js")(sequelize, Sequelize);
 
-// //One to many relationship between regions and recipes.
-// db.region.hasMany(db.recipe, { as: "recipes" });
-// db.recipe.belongsTo (db.region, {
-//   foreignKey: "regionId",
-//   as: "regions",
-// });
-
-//setting up region_recipe table
-// db.region_recipe.belongsTo(db.recipe, {
-//   foreignKey: "recipeId",
-// });
-
-// db.region_recipe.belongsTo(db.region, {
-//   foreignKey: "regionId",
-// });
-
+//Define region_recipe join table
 db.region_recipe = sequelize.define('region_recipes', {
   id: {
     type: Sequelize.INTEGER,
@@ -64,9 +50,23 @@ db.region.belongsToMany(db.recipe, {
 });
 db.recipe.belongsToMany(db.region, {
   through: "region_recipes",
-  as: "region,",
+  as: "region",
   foreignKey: "recipeId",
   otherKey: "regionId"
+});
+
+//One to many relationship between regions and stateProvinces.
+db.region.hasMany(db.stateProvince, { as: "stateProvinces" });
+db.stateProvince.belongsTo (db.region, {
+  foreignKey: "regionId",
+  as: "regions",
+});
+
+//One to many relationship between recipes and pairings.
+db.recipe.hasMany(db.pairing, { as: "pairings" });
+db.pairing.belongsTo (db.recipe, {
+  foreignKey: "recipeId",
+  as: "recipes",
 });
 
 //One to many relationship between creators and recipes.
@@ -81,13 +81,6 @@ db.user.hasMany(db.recipe, { as: "recipes" });
 db.recipe.belongsTo (db.user, {
   foreignKey: "userId",
   as: "users",
-});
-
-//One to many relationship between regions and stateProvinces.
-db.region.hasMany(db.stateProvince, { as: "stateProvinces" });
-db.stateProvince.belongsTo (db.region, {
-  foreignKey: "regionId",
-  as: "regions",
 });
 
 //Many to many relationship between user and roles.

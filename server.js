@@ -75,7 +75,7 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/creator.routes')(app);
 require("./app/routes/region.routes")(app);
-require('./app/routes/recipeRegion.routes')(app);
+require('./app/routes/regionRecipe.routes')(app);
 
 // function initial() {
 //   Role.create({

@@ -18,12 +18,14 @@ module.exports = app => {
     //Delete a Creator with id
     router.delete("/:id", creators.delete);
 
-    //Delete all Recipes
+    //Delete all Creators
     router.delete("/", creators.deleteAll);
 
-    //Retrieve recipes with creator id
-    router.get("/recipes/:id", creators.findCreatorRecipes);
+    //Retrieve all Creators with Recipes
+    router.get("/recipes", creators.findAllCreatorRecipes);
 
+    //Retrieve one Creator with Recipes
+    router.get("/recipes/:id", creators.findCreatorRecipes);
 
     app.use('/api/creators', router);
 };

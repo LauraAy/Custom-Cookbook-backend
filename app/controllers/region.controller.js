@@ -1,8 +1,5 @@
 const db = require("../models");
 const Region = db.region;
-const Recipe = db.recipe;
-const RegionRecipe = db.region_recipe;
-const Op = db.Sequelize.Op;
 
 // Create and Save a new Region
 exports.create = (req, res) => {
@@ -19,26 +16,6 @@ exports.create = (req, res) => {
 
   // Save Region in the database
 Region.create(region)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Region."
-      });
-    });
-};
-
-exports.createRegionRecipe = (req, res) => {
-
-  const regionRecipe = {
-    regionId: req.body.regionId,
-    recipeId: req.body.recipeId
-  };
-
-  // Save Region in the database
-  RegionRecipe.create(regionRecipe)
     .then(data => {
       res.send(data);
     })
@@ -153,115 +130,3 @@ exports.deleteAll = (req, res) => {
       });
     });
 };
-
-// find all published Recipes
-exports.findAllPublished = (req, res) => {
-  Region.findAll({ where: { published: true } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Regions."
-      });
-    });
-};
-
-// Find  all recipes with regions
-// exports.findRegionRecipes = (req, res) => {
-//   RegionRecipe.findAll ({
-//       attributes: ["id"], include: [ 
-//         {
-//         model: Region,
-//         as: "region",
-//         attributes: ['country', 'regionName'],
-//       }, {
-//         model: Recipe,
-//         as: "recipe",
-//         attributes: ['title']
-//       }],
-// })
-//       .then(data => {
-//         res.send(data);
-//       })
-//       .catch(err => {
-//         res.status(500).send({
-//           message:
-//             err.message || "Some error occurred while retrieving Recipes."
-//         });
-//       });
-//   };
-
-exports.findRegionRecipes = (req, res) => {
-  Region.findAll ({
-      attributes: ["country", "regionName"], include: [ 
-       {
-        model: Recipe,
-        as: "recipe",
-        attributes: ['title']
-      }],
-})
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving Recipes."
-        });
-      });
-  };
-
-// exports.findRegionRecipes= (req, res) => {
-//     // const id = req.params.id;
-//   Region.findAll({ 
-//     include: [
-//     {
-//       model: Recipe,
-//       as: "recipes",
-//       attributes: ["id", "title", "description"],
-//       through: {
-//         attributes: [],
-//       }
-//     }
-//   ] 
-// })
-//   .then((regions) => {
-//     return regions;
-//   })
-//   .catch((err) => {
-//   res.status(500).send({
-//     message: "It didn't work. :("
-//   });
-//   })
-// }
-
-  //Add recipe to region
-  exports.addRecipe = (req, res) => {
-    const regionId = req.body.regionId;
-    const recipeId = req.body.recipeId;
-    
-    return Region.findByPk(regionId)
-    .then((region) => {
-      if (!region) {
-        console.log("Region not found!");
-        return null;
-      }
-      return Recipe.findByPk(recipeId)
-      .then((recipe) => {
-        if (!recipe) {
-          console.log("Recipe not found!");
-          return null;
-        }
-        return region.addRecipe(recipe);
-          console.log(`>> added Recipe id=${recipe.id} to Region id=${region.id}`);
-          res.send({
-            message: "Region was deleted successfully!"
-          });
-        });
-      })
-      .catch((err) => {
-        console.log(">> Error while adding Recipe to Region: ", err);
-      });
-  };

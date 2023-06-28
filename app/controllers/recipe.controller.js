@@ -1,7 +1,5 @@
 const db = require("../models");
 const Recipe = db.recipe;
-const Region = db.region;
-const Creator = db.creator
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Recipe
@@ -14,7 +12,7 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Recipe
+   //create recipe
   const recipe = {
     title: req.body.title,
     description: req.body.description,
@@ -24,10 +22,6 @@ exports.create = (req, res) => {
     directions: req.body.directions,
     published: req.body.published ? req.body.published : false,
     userId: req.body.userId
-    // creators: [{
-    //   creatorId: req.body.creatorId
-    // }],
-    // include: "creators"
   };
 
   // Save Recipe in the database
@@ -80,27 +74,6 @@ exports.findOne = (req, res) => {
       });
     });
 };
-
-//Find recipe with regions
-exports.findWithRegions= (req, res) => {
-  const id = req.params.id;
-Recipe.findByPk(id, { include: ["regions"] })
-.then(data => {
-if (data) {
-  res.send(data);
-} else {
-  res.status(404).send({
-    message: `Cannot find Rrecipe with id=${id}.`
-  });
-}
-})
-.catch(err => {
-res.status(500).send({
-  message: "Error retrieving Recipe with id=" + id
-});
-});
-};
-
 
 // Update a Recipe by the id in the request
 exports.update = (req, res) => {
@@ -182,52 +155,3 @@ exports.findAllPublished = (req, res) => {
       });
     });
 };
-
-//add a recipe to a creator
-// exports.addCreator = (recipeId, creatorId)  => {
-//   return Recipe.findByPk(recipeId)
-//   .then((recipe) => {
-//       if (!recipe) {
-//           console.log('Recipe not found!');
-//           return null;
-//       }
-//   return Creator.findByPk(creatorId).then((creator) => {
-//       if (!creator) {
-//           console.log("Creator not found!");
-//           return null;
-//       }
-
-//       recipe.addCreator(creator);
-//       console.log(`>> added Recipe id=${recipe.id} to Creator id=${creator.id}`);
-//       return recipe;
-//     });
-//   })
-//   .catch((err) => {
-//     console.log(">> Error while adding Creator to Recipe: ", err);
-//   })
-// };
-
-
-
-//Find creators with recipeId
-// exports.findRecipeCreators= (req, res) => {
-//   const id = req.params.id;
-// Recipe.findByPk(id, { include: ["creators"] })
-// .then(data => {
-// if (data) {
-//   res.send(data);
-// } else {
-//   res.status(404).send({
-//     message: `Cannot find Recipe with id=${id}.`
-//   });
-// }
-// })
-// .catch(err => {
-// res.status(500).send({
-//   message: "Error retrieving Recipe with id=" + id
-// });
-// });
-// };
-
-
-
