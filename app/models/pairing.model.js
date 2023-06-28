@@ -1,7 +1,7 @@
 const { INTEGER, STRING, TEXT } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
-  const Pairing = sequelize.define("recipe", {
+  const Pairing = sequelize.define("pairing", {
     drinks: {
       type: Sequelize.TEXT
     },

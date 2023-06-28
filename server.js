@@ -59,7 +59,7 @@ db.sequelize.sync()
 
 
 
-// drop the table if it already exists
+// // drop the table if it already exists
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log("Drop and re-sync db.");
 // });
@@ -76,6 +76,7 @@ require('./app/routes/user.routes')(app);
 require('./app/routes/creator.routes')(app);
 require("./app/routes/region.routes")(app);
 require('./app/routes/regionRecipe.routes')(app);
+require('./app/routes/pairing.routes')(app);
 
 // function initial() {
 //   Role.create({

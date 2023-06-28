@@ -25,7 +25,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.creator = require("../models/creator.model.js")(sequelize, Sequelize);
-db.pairing = require("/models/pairing.model.js")(sequelize, Sequelize);
+db.pairing = require("../models/pairing.model.js")(sequelize, Sequelize);
 db.recipe = require("../models/recipe.model.js")(sequelize, Sequelize);
 db.region_recipe = require("../models/region_recipe.model.js")(sequelize, Sequelize);
 db.region = require("../models/region.model.js")(sequelize, Sequelize);
