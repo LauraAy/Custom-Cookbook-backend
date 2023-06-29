@@ -25,7 +25,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.creator = require("../models/creator.model.js")(sequelize, Sequelize);
-db.pairing = require("/models/pairing.model.js")(sequelize, Sequelize);
+db.pairing = require("../models/pairing.model.js")(sequelize, Sequelize);
 db.recipe = require("../models/recipe.model.js")(sequelize, Sequelize);
 db.region_recipe = require("../models/region_recipe.model.js")(sequelize, Sequelize);
 db.region = require("../models/region.model.js")(sequelize, Sequelize);
@@ -63,10 +63,10 @@ db.stateProvince.belongsTo (db.region, {
 });
 
 //One to many relationship between recipes and pairings.
-db.recipe.hasMany(db.pairing, { as: "pairings" });
-db.pairing.belongsTo (db.recipe, {
-  foreignKey: "recipeId",
-  as: "recipes",
+db.pairing.hasMany(db.recipe, { as: "recipes" });
+db.recipe.belongsTo (db.pairing, {
+  foreignKey: "pairingId",
+  as: "pairings"
 });
 
 //One to many relationship between creators and recipes.

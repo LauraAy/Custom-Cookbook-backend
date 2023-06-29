@@ -129,46 +129,4 @@ exports.deleteAll = (req, res) => {
           err.message || "Some error occurred while removing all Pairings."
       });
     });
-};
-
-//Find all pairings with recipes
-exports.findAllPairingRecipes= (req, res) => {
-  
-    Pairing.findAll({ include: ["recipes"] })
-    .then(data => {
-    if (data) {
-      res.send(data);
-    } else {
-      res.status(404).send({
-        message: `Cannot find Pairing with id=${id}.`
-      });
-    }
-    })
-    .catch(err => {
-    res.status(500).send({
-      message: "Error retrieving Pairing with id=" + id
-    });
-    });
-    };
-    
-    
-    //Find one pairing with recipes
-    exports.findPairingRecipes= (req, res) => {
-      const id = req.params.id;
-    
-    Pairing.findByPk(id, { include: ["recipes"] })
-    .then(data => {
-    if (data) {
-      res.send(data);
-    } else {
-      res.status(404).send({
-        message: `Cannot find Pairing with id=${id}.`
-      });
-    }
-    })
-    .catch(err => {
-    res.status(500).send({
-      message: "Error retrieving Pairing with id=" + id
-    });
-    });
-    };
+};  
