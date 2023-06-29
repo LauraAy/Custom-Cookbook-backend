@@ -21,8 +21,6 @@ const db = require("./app/models");
 const Role = db.role; 
 const recipeController = require("./app/controllers/recipe.controller.js");
 
-
-
 const run = async () => {
 
 // await RegionController.addRecipeRegion(1, 1);
@@ -48,6 +46,7 @@ const run = async () => {
   // });
 };
 
+//Start it up
 db.sequelize.sync()
   .then(() => {
     console.log("Synced db.");
@@ -74,9 +73,11 @@ require("./app/routes/recipe.routes")(app);
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/creator.routes')(app);
+require('./app/routes/creatorRecipe.routes')(app);
 require("./app/routes/region.routes")(app);
 require('./app/routes/regionRecipe.routes')(app);
 require('./app/routes/pairing.routes')(app);
+require('./app/routes/pairingRecipe.routes')(app);
 
 // function initial() {
 //   Role.create({

@@ -63,10 +63,10 @@ db.stateProvince.belongsTo (db.region, {
 });
 
 //One to many relationship between recipes and pairings.
-db.recipe.hasMany(db.pairing, { as: "pairings" });
-db.pairing.belongsTo (db.recipe, {
-  foreignKey: "recipeId",
-  as: "recipes",
+db.pairing.hasMany(db.recipe, { as: "recipes" });
+db.recipe.belongsTo (db.pairing, {
+  foreignKey: "pairingId",
+  as: "pairings"
 });
 
 //One to many relationship between creators and recipes.
