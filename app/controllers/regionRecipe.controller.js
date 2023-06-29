@@ -111,5 +111,15 @@ exports.findOneRecipeRegion = (req, res) => {
       });
     });
 };
-
   
+  exports.removeRegion = (req, res) => {
+    const recipeId = req.body.recipeId
+    const regionId = req.body.regionId 
+
+    Recipe.findOne({
+        where: { id: recipeId }
+    }).then(recipe => {
+        recipe.removeRegion([regionId])
+        res.sendStatus(200);
+    }).catch(e => console.log(e));
+}
