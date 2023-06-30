@@ -119,7 +119,7 @@ exports.findOneRecipeRegion = (req, res) => {
     Recipe.findOne({
         where: { id: recipeId }
     }).then(recipe => {
-        recipe.removeRegion([regionId])
+        recipe.removeRegions([regionId])
         res.sendStatus(200);
     }).catch(e => console.log(e));
 }

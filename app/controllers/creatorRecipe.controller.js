@@ -85,3 +85,14 @@ exports.findAllRecipeCreators= (req, res) => {
         });
       };
     
+      exports.removeCreator = (req, res) => {
+        const recipeId = req.body.recipeId
+        const creatorId = req.body.creatorId 
+      
+        Creator.findOne({
+            where: { id: creatorId }
+        }).then(creator => {
+            creator.removeRecipes([recipeId])
+            res.sendStatus(200);
+        }).catch(e => console.log(e));
+      }

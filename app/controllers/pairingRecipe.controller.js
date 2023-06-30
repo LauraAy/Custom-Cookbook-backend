@@ -85,3 +85,16 @@ exports.findAllRecipePairings= (req, res) => {
         });
       };
     
+      exports.removePairing = (req, res) => {
+        const recipeId = req.body.recipeId
+        const pairingId = req.body.pairingId 
+    
+        Pairing.findOne({
+            where: { id: pairingId }
+        }).then(pairing => {
+            pairing.removeRecipes([recipeId])
+            res.sendStatus(200);
+        }).catch(e => console.log(e));
+    }
+
+    
