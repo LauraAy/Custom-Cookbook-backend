@@ -16,5 +16,8 @@ var router = require("express").Router();
    //Retrieve one Recipe with Pairing
    router.get("/recipes/:id", pairingRecipes.findRecipePairings);
 
+    //Remove one Pairing from Recipe
+    router.delete("/", pairingRecipes.removePairing);
+
    app.use('/api/pairingRecipes', router);
 };
