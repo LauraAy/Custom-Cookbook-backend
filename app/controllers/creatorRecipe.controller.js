@@ -122,11 +122,17 @@ exports.findRecipeCreators= (req, res) => {
       exports.removeCreator = (req, res) => {
         const recipeId = req.body.recipeId
         const creatorId = req.body.creatorId 
-      
-        Recipe.findOne({
-            where: { id: recipeId }
-        }).then(recipe => {
-            recipe.removeCreators([creatorId])
-            res.sendStatus(200);
-        }).catch(e => console.log(e));
-      }
+    
+        RegionRecipe.destroy({
+          where: {creatorId: creatorId, recipeId: recipeId}
+        })
+          .then(nums => {
+            res.send({ message: `${nums} creator_recipes were deleted successfully!` });
+          })
+          .catch(err => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while removing creator_recipes."
+            });
+          });  
+    }
