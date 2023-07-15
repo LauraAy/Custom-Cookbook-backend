@@ -2,6 +2,26 @@ const db = require("../models");
 const Creator = db.creator;
 const Recipe = db.recipe;
 
+//Add Creator to Region
+exports.createCreatorRecipe = (req, res) => {
+
+  const creatorRecipe = {
+    creatorId: req.body.creatorId,
+    recipeId: req.body.recipeId
+  };
+
+  CreatorRecipe.create(creatorRecipe)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while adding the creator to region."
+      });
+    });
+};
+
 //Find all Pairings with Recipes
 exports.findAllCreatorRecipes= (req, res) => {
   
