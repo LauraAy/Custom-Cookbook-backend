@@ -8,10 +8,10 @@ module.exports = app => {
     //Add recipe to region
     router.post("/", regionRecipes.createRegionRecipe);
 
-    //Retrieve all recipes with regions
+    //Retrieve all regions with recipes
     router.get("/", regionRecipes.findRegionRecipes);
 
-    //Retrieve all regions with recipes
+    //Retrieve all recipes with regions
     router.get("/recipes", regionRecipes.findRecipeRegions);
 
     //Retrieve one region with recipes

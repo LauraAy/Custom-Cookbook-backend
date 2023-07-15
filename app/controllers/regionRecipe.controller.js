@@ -3,25 +3,25 @@ const Region = db.region;
 const Recipe = db.recipe;
 const RegionRecipe = db.region_recipe;
 
- //Add recipe to region.
+//Add Recipe to Region
 exports.createRegionRecipe = (req, res) => {
 
-    const regionRecipe = {
-      regionId: req.body.regionId,
-      recipeId: req.body.recipeId
-    };
-  
-    RegionRecipe.create(regionRecipe)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while adding the recipe to region."
-        });
-      });
+  const regionRecipe = {
+    regionId: req.body.regionId,
+    recipeId: req.body.recipeId
   };
+
+  RegionRecipe.create(regionRecipe)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while adding the recipe to region."
+      });
+    });
+};
 
 //Find all regions with recipes
 exports.findRegionRecipes = (req, res) => {

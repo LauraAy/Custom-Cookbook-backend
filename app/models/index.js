@@ -69,11 +69,25 @@ db.recipe.belongsTo (db.pairing, {
   as: "pairings"
 });
 
-//One to many relationship between creators and recipes.
-db.creator.hasMany(db.recipe, { as: "recipes" });
-db.recipe.belongsTo (db.creator, {
+// //One to many relationship between creators and recipes.
+// db.creator.hasMany(db.recipe, { as: "recipes" });
+// db.recipe.belongsTo (db.creator, {
+//   foreignKey: "creatorId",
+//   as: "creators",
+// });
+
+//Many to many relationship between creators and recipes.
+db.creator.belongsToMany(db.recipe, {
+  through: "creator_recipes",
+  as: "recipe",
   foreignKey: "creatorId",
-  as: "creators",
+  otherKey: "recipeId"
+});
+db.recipe.belongsToMany(db.creator, {
+  through: "creator_recipes",
+  as: "creator",
+  foreignKey: "recipeId",
+  otherKey: "creatorId"
 });
 
 //One to many relationship between user and recipes.
@@ -94,20 +108,6 @@ db.user.belongsToMany(db.role, {
   foreignKey: "userId",
   otherKey: "roleId"
 });
-
-
-
-// //one to many relationship for creators and recipes
-// db.recipe.belongsToMany(db.creator, {
-//   through: "creator_recipe",
-//   as: "creators",
-//   foreignKey: "recipeId",
-// });
-// db.creator.belongsToMany(db.recipe, {
-//   through: "creator_recipe",
-//   as: "recipes",
-//   foreignKey: "creatorId",
-// });
 
 
 db.ROLES = ["user", "admin", "moderator"];
