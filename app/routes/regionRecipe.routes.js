@@ -1,6 +1,5 @@
 module.exports = app => {
-    const regions = require("../controllers/region.controller.js");
-    const recipes = require("../controllers/recipe.controller.js");
+    
     const regionRecipes = require("../controllers/regionRecipe.controller.js");
     
     var router = require("express").Router();

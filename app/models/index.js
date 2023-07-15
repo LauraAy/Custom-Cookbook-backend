@@ -41,6 +41,16 @@ db.region_recipe = sequelize.define('region_recipes', {
     autoIncrement: true
   }
 })
+
+//Define creator_recipe join table
+db.creator_recipe = sequelize.define('creator_recipes', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  }
+})
+
 // Many to many relationship between recipes and regions.
 db.region.belongsToMany(db.recipe, {
   through: "region_recipes",
