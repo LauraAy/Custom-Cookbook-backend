@@ -1,59 +1,88 @@
 const db = require("../models");
 const Creator = db.creator;
 const Recipe = db.recipe;
+const CreatorRecipe = db.creator_recipe;
 
-//Find all Pairings with Recipes
-exports.findAllCreatorRecipes= (req, res) => {
-  
-    Creator.findAll({ include: ["recipes"] })
+//Add Creator to Region
+exports.createCreatorRecipe = (req, res) => {
+
+  const creatorRecipe = {
+    creatorId: req.body.creatorId,
+    recipeId: req.body.recipeId
+  };
+
+  CreatorRecipe.create(creatorRecipe)
     .then(data => {
-    if (data) {
       res.send(data);
-    } else {
-      res.status(404).send({
-        message: `Cannot find Creator with id=${id}.`
-      });
-    }
     })
     .catch(err => {
-    res.status(500).send({
-      message: "Error retrieving Creator with id=" + id
-    });
-    });
-    };
-    
-    
-    //Find one Pairing with Recipes
-    exports.findCreatorRecipes= (req, res) => {
-      const id = req.params.id;
-    
-    Creator.findByPk(id, { include: ["recipes"] })
-    .then(data => {
-    if (data) {
-      res.send(data);
-    } else {
-      res.status(404).send({
-        message: `Cannot find Creator with id=${id}.`
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while adding the creator to region."
       });
-    }
-    })
-    .catch(err => {
+    });
+};
+
+//Find all creators with recipes
+exports.findCreatorRecipes = (req, res) => {
+  Creator.findAll ({
+       include: [ 
+       {
+        model: Recipe,
+        as: "recipe",
+        attributes: ['title']
+      }],
+})
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving the Regions."
+        });
+      });
+  };
+
+
+  //Find a single creator with recipes
+exports.findOneCreatorRecipe = (req, res) => {
+  const id = req.params.id;
+
+  Creator.findByPk(id, {
+   include: [ 
+      {
+       model: Recipe,
+       as: "recipe",
+       attributes: ['title']
+     }],
+  })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
     res.status(500).send({
-      message: "Error retrieving Creator with id=" + id
+      message:
+        err.message || "Some error occurred while retrieving the Region."
     });
   });
 };
-
+    
 //Find all Recipes with Creators
-exports.findAllRecipeCreators= (req, res) => {
+exports.findRecipeCreators= (req, res) => {
   
-    Recipe.findAll({ include: ["creators"] })
+    Recipe.findAll({ include: [
+      {
+        model: Creator,
+        as: "creator"
+      }
+    ] })
     .then(data => {
     if (data) {
       res.send(data);
     } else {
       res.status(404).send({
-        message: `Cannot find Recipe with id=${id}.`
+        message: `Cannot find recipe.`
       });
     }
     })
@@ -64,11 +93,16 @@ exports.findAllRecipeCreators= (req, res) => {
     });
     };
 
-    //Find one Recipe with Pairings
-        exports.findRecipeCreators= (req, res) => {
-            const id = req.params.id;
+    //Find one Recipe with Creators
+        exports.findOneRecipeCreator= (req, res) => {
+          const id = req.params.id;
           
-          Recipe.findByPk(id, { include: ["creators"] })
+          Recipe.findByPk(id, { include: [
+            {
+              model: Creator,
+              as: "creator"
+            }
+          ] })
           .then(data => {
           if (data) {
             res.send(data);
@@ -88,11 +122,17 @@ exports.findAllRecipeCreators= (req, res) => {
       exports.removeCreator = (req, res) => {
         const recipeId = req.body.recipeId
         const creatorId = req.body.creatorId 
-      
-        Creator.findOne({
-            where: { id: creatorId }
-        }).then(creator => {
-            creator.removeRecipes([recipeId])
-            res.sendStatus(200);
-        }).catch(e => console.log(e));
-      }
+    
+        RegionRecipe.destroy({
+          where: {creatorId: creatorId, recipeId: recipeId}
+        })
+          .then(nums => {
+            res.send({ message: `${nums} creator_recipes were deleted successfully!` });
+          })
+          .catch(err => {
+            res.status(500).send({
+              message:
+                err.message || "Some error occurred while removing creator_recipes."
+            });
+          });  
+    }

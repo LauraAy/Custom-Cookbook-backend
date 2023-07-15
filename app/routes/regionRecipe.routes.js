@@ -1,6 +1,5 @@
 module.exports = app => {
-    const regions = require("../controllers/region.controller.js");
-    const recipes = require("../controllers/recipe.controller.js");
+    
     const regionRecipes = require("../controllers/regionRecipe.controller.js");
     
     var router = require("express").Router();
@@ -8,10 +7,10 @@ module.exports = app => {
     //Add recipe to region
     router.post("/", regionRecipes.createRegionRecipe);
 
-    //Retrieve all recipes with regions
+    //Retrieve all regions with recipes
     router.get("/", regionRecipes.findRegionRecipes);
 
-    //Retrieve all regions with recipes
+    //Retrieve all recipes with regions
     router.get("/recipes", regionRecipes.findRecipeRegions);
 
     //Retrieve one region with recipes

@@ -3,25 +3,25 @@ const Region = db.region;
 const Recipe = db.recipe;
 const RegionRecipe = db.region_recipe;
 
- //Add recipe to region.
+//Add Recipe to Region
 exports.createRegionRecipe = (req, res) => {
 
-    const regionRecipe = {
-      regionId: req.body.regionId,
-      recipeId: req.body.recipeId
-    };
-  
-    RegionRecipe.create(regionRecipe)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while adding the recipe to region."
-        });
-      });
+  const regionRecipe = {
+    regionId: req.body.regionId,
+    recipeId: req.body.recipeId
   };
+
+  RegionRecipe.create(regionRecipe)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while adding the recipe to region."
+      });
+    });
+};
 
 //Find all regions with recipes
 exports.findRegionRecipes = (req, res) => {
@@ -116,10 +116,16 @@ exports.findOneRecipeRegion = (req, res) => {
     const recipeId = req.body.recipeId
     const regionId = req.body.regionId 
 
-    Recipe.findOne({
-        where: { id: recipeId }
-    }).then(recipe => {
-        recipe.removeRegions([regionId])
-        res.sendStatus(200);
-    }).catch(e => console.log(e));
+    RegionRecipe.destroy({
+      where: {regionId: regionId, recipeId: recipeId}
+    })
+      .then(nums => {
+        res.send({ message: `${nums} region_recipes were deleted successfully!` });
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while removing region_recipes."
+        });
+      });  
 }

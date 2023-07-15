@@ -41,6 +41,16 @@ db.region_recipe = sequelize.define('region_recipes', {
     autoIncrement: true
   }
 })
+
+//Define creator_recipe join table
+db.creator_recipe = sequelize.define('creator_recipes', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  }
+})
+
 // Many to many relationship between recipes and regions.
 db.region.belongsToMany(db.recipe, {
   through: "region_recipes",
@@ -69,11 +79,25 @@ db.recipe.belongsTo (db.pairing, {
   as: "pairings"
 });
 
-//One to many relationship between creators and recipes.
-db.creator.hasMany(db.recipe, { as: "recipes" });
-db.recipe.belongsTo (db.creator, {
+// //One to many relationship between creators and recipes.
+// db.creator.hasMany(db.recipe, { as: "recipes" });
+// db.recipe.belongsTo (db.creator, {
+//   foreignKey: "creatorId",
+//   as: "creators",
+// });
+
+//Many to many relationship between creators and recipes.
+db.creator.belongsToMany(db.recipe, {
+  through: "creator_recipes",
+  as: "recipe",
   foreignKey: "creatorId",
-  as: "creators",
+  otherKey: "recipeId"
+});
+db.recipe.belongsToMany(db.creator, {
+  through: "creator_recipes",
+  as: "creator",
+  foreignKey: "recipeId",
+  otherKey: "creatorId"
 });
 
 //One to many relationship between user and recipes.
@@ -94,20 +118,6 @@ db.user.belongsToMany(db.role, {
   foreignKey: "userId",
   otherKey: "roleId"
 });
-
-
-
-// //one to many relationship for creators and recipes
-// db.recipe.belongsToMany(db.creator, {
-//   through: "creator_recipe",
-//   as: "creators",
-//   foreignKey: "recipeId",
-// });
-// db.creator.belongsToMany(db.recipe, {
-//   through: "creator_recipe",
-//   as: "recipes",
-//   foreignKey: "creatorId",
-// });
 
 
 db.ROLES = ["user", "admin", "moderator"];
