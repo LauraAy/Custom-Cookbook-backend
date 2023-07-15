@@ -21,11 +21,5 @@ module.exports = app => {
     //Delete all Pairings
     router.delete("/", pairings.deleteAll);
 
-    // //Retreive all Pairings with recipes
-    // router.get("/pairings"), pairings.findAllPairingRecipes
-
-    // //Retrieve one Pairing with Recipes
-    // router.get("/pairings/:id", pairings.findOnePairingRecipe);
-
     app.use('/api/pairings', router);
 };
