@@ -71,11 +71,10 @@ exports.findOneRegionRecipe = (req, res) => {
     exports.findRecipeRegions = (req, res) => {
     
       Recipe.findAll({
-      attributes: ['title'], include: [ 
+      include: [ 
        {
         model: Region,
         as: "region",
-        attributes: ['country', 'regionName']
       }],
   })
       .then(data => {
@@ -94,11 +93,10 @@ exports.findOneRecipeRegion = (req, res) => {
     const id = req.params.id;
   
     Recipe.findByPk(id, {
-    attributes: ['title'], include: [ 
+    include: [ 
      {
       model: Region,
       as: "region",
-      attributes: ['country', 'regionName']
     }],
 })
     .then(data => {
