@@ -119,20 +119,21 @@ exports.findRecipeCreators= (req, res) => {
         });
       };
     
-      exports.removeCreator = (req, res) => {
-        const recipeId = req.body.recipeId
-        const creatorId = req.body.creatorId 
-    
-        RegionRecipe.destroy({
-          where: {creatorId: creatorId, recipeId: recipeId}
-        })
-          .then(nums => {
-            res.send({ message: `${nums} creator_recipes were deleted successfully!` });
-          })
-          .catch(err => {
-            res.status(500).send({
-              message:
-                err.message || "Some error occurred while removing creator_recipes."
-            });
-          });  
-    }
+    //remove creator from recipe
+    exports.removeCreator = (req, res) => {
+    const recipeId = req.params.recipeId;
+    const creatorId = req.params.creatorId 
+
+    CreatorRecipe.destroy({
+      where: {creatorId: creatorId, recipeId: recipeId}
+    })
+    .then(nums => {
+      res.send({ message: `${nums} creator_recipes were deleted successfully!` });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing region_recipes."
+      });
+    });  
+}
