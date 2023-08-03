@@ -3,7 +3,8 @@ const { INTEGER, STRING, TEXT } = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
   const Recipe = sequelize.define("recipe", {
     title: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     description: {
       type: Sequelize.STRING

@@ -19,8 +19,8 @@ module.exports = app => {
        //Retrieve one Recipe with Creator
        router.get("/recipes/:id", creatorRecipes.findOneRecipeCreator);
     
-      //Remove one Creator from Recipe
-      router.delete("/", creatorRecipes.removeCreator);
+      //Delete one region from a recipe
+      router.delete("/:recipeId/:creatorId", creatorRecipes.removeCreator);
 
        app.use('/api/creatorRecipes', router);
     };

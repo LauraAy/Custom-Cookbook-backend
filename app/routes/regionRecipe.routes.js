@@ -20,7 +20,7 @@ module.exports = app => {
     router.get("/recipes/:id", regionRecipes.findOneRecipeRegion) 
 
     //Delete one region from a recipe
-    router.delete("/", regionRecipes.removeRegion);
+    router.delete("/:recipeId/:regionId", regionRecipes.removeRegion);
  
 
     app.use('/api/regionRecipes', router);

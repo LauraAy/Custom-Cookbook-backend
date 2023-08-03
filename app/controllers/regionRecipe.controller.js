@@ -71,11 +71,10 @@ exports.findOneRegionRecipe = (req, res) => {
     exports.findRecipeRegions = (req, res) => {
     
       Recipe.findAll({
-      attributes: ['title'], include: [ 
+      include: [ 
        {
         model: Region,
         as: "region",
-        attributes: ['country', 'regionName']
       }],
   })
       .then(data => {
@@ -94,11 +93,10 @@ exports.findOneRecipeRegion = (req, res) => {
     const id = req.params.id;
   
     Recipe.findByPk(id, {
-    attributes: ['title'], include: [ 
+    include: [ 
      {
       model: Region,
       as: "region",
-      attributes: ['country', 'regionName']
     }],
 })
     .then(data => {
@@ -112,9 +110,10 @@ exports.findOneRecipeRegion = (req, res) => {
     });
 };
   
+//remove region from recipe
   exports.removeRegion = (req, res) => {
-    const recipeId = req.body.recipeId
-    const regionId = req.body.regionId 
+    const recipeId = req.params.recipeId;
+    const regionId = req.params.regionId 
 
     RegionRecipe.destroy({
       where: {regionId: regionId, recipeId: recipeId}
