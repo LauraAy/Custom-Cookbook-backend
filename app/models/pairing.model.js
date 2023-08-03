@@ -2,6 +2,10 @@ const { INTEGER, STRING, TEXT } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
   const Pairing = sequelize.define("pairing", {
+    pairingName: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     description: {
       type: Sequelize.TEXT
     },

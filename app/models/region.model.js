@@ -3,7 +3,8 @@ const { DECIMAL, STRING, INTEGER } = require("sequelize");
 module.exports = (sequelize, Sequelize) => {
   const Region = sequelize.define("region", {
     country: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     lat: {
       type: Sequelize.DECIMAL(8,6)

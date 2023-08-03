@@ -5,6 +5,8 @@ const Pairing = db.pairing;
 exports.create = (req, res) => {
 
   const pairing = {
+    pairingName: req.body.pairingName,
+    description: req.body.description,
     drinks: req.body.drinks,
     shows: req.body.shows,
     books: req.body.books,
