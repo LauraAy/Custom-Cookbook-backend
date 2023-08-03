@@ -79,13 +79,6 @@ db.recipe.belongsTo (db.pairing, {
   as: "pairings"
 });
 
-// //One to many relationship between creators and recipes.
-// db.creator.hasMany(db.recipe, { as: "recipes" });
-// db.recipe.belongsTo (db.creator, {
-//   foreignKey: "creatorId",
-//   as: "creators",
-// });
-
 //Many to many relationship between creators and recipes.
 db.creator.belongsToMany(db.recipe, {
   through: "creator_recipes",

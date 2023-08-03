@@ -84,10 +84,11 @@ exports.findAllRecipePairings= (req, res) => {
           });
         });
       };
-    
+
+    //remove pairing from recipe
       exports.removePairing = (req, res) => {
-        const recipeId = req.body.recipeId
-        const pairingId = req.body.pairingId 
+        const recipeId = req.params.recipeId
+        const pairingId = req.params.pairingId 
     
         Pairing.findOne({
             where: { id: pairingId }
