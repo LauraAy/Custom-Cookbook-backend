@@ -37,7 +37,21 @@ Recipe.create(recipe)
     });
 };
 
-// Retrieve all Recipes from the database.
+// Retrieve all Regions from the database.
+exports.findAll = (req, res) => {
+  Region.findAll ()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Recipes."
+      });
+    });
+};
+
+// Retrieve all Recipes from the database by title.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
@@ -53,6 +67,23 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+// // Retrieve array of Recipes from the database by pk.
+// exports.findSome = (req, res) => {
+//   const idArray = req.body.idArray
+//   Region.findAll ({
+//     where: {[Op.and]:[{ id: 1}, { id: 3},{ id: 2}]} 
+//   })
+//     .then(data => {
+//       res.send(data);
+//     })
+//     .catch(err => {
+//       res.status(500).send({
+//         message:
+//           err.message || "Some error occurred while retrieving Recipes."
+//       });
+//     });
+// };
 
 // Find a single Recipe with an id
 exports.findOne = (req, res) => {
