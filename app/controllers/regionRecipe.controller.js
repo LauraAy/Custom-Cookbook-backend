@@ -26,11 +26,10 @@ exports.createRegionRecipe = (req, res) => {
 //Find all regions with recipes
 exports.findRegionRecipes = (req, res) => {
     Region.findAll ({
-        attributes: ['country', 'regionName'], include: [ 
+     include: [ 
          {
           model: Recipe,
           as: "recipe",
-          attributes: ['title']
         }],
   })
         .then(data => {

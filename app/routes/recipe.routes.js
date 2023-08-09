@@ -11,6 +11,9 @@ module.exports = app => {
 
     //Retrieve all published Recipes
     router.get("/published", recipes.findAllPublished);
+    
+    // //Retrieve array of recipes by id
+    // router.get("/findSome", recipes.findSome);
 
     //Retrieve a single Recipe with id
     router.get("/:id", recipes.findOne);
