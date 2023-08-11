@@ -9,6 +9,9 @@ module.exports = app => {
     //Retrieve all Regions
     router.get("/", regions.findAll);
 
+    //Retrieve all Regions by country or regionName search
+    router.get("/search", regions.searchAll);
+
     //Retrieve a single Region with id
     router.get("/:id", regions.findOne);
 

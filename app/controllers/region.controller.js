@@ -64,8 +64,24 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Retrieve all Regions from the database by country or regionName.
+// Retrieve all Regions from the database with options to retrieve by country or regionName.
 exports.findAll = (req, res) => {
+  
+  Region.findAll()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Regions."
+      });
+    });
+};
+
+
+// Retrieve all Regions from the database with options to retrieve by country or regionName.
+exports.searchAll = (req, res) => {
   const country = req.query.country;
   const regionName = req.query.regionName;
   var countryCondition = country ? { country: { [Op.like]: `%${country}%` } } : null;

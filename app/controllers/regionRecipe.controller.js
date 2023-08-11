@@ -2,6 +2,7 @@ const db = require("../models");
 const Region = db.region;
 const Recipe = db.recipe;
 const RegionRecipe = db.region_recipe;
+const Op = db.Sequelize.Op;
 
 //Add Recipe to Region
 exports.createRegionRecipe = (req, res) => {
@@ -25,23 +26,32 @@ exports.createRegionRecipe = (req, res) => {
 
 //Find all regions with recipes
 exports.findRegionRecipes = (req, res) => {
-    Region.findAll ({
-     include: [ 
-         {
-          model: Recipe,
-          as: "recipe",
-        }],
-  })
-        .then(data => {
-          res.send(data);
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while retrieving the Regions."
-          });
-        });
-    };
+  const country = req.query.country;
+  const regionName = req.query.regionName;
+  var countryCondition = country ? { country: { [Op.like]: `%${country}%` } } : null;
+  var regionCondition = regionName ? { regionName: { [Op.like]: `%${regionName}%` } } : null;
+  
+  Region.findAll ({where: {
+    [Op.or]: [
+      countryCondition,
+      regionCondition
+    ]},
+    include: [ 
+      {
+        model: Recipe,
+        as: "recipe",
+      }],
+    })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+        err.message || "Some error occurred while retrieving the Regions."
+      });
+    });
+  };
 
 //Find a single region with recipes
 exports.findOneRegionRecipe = (req, res) => {
