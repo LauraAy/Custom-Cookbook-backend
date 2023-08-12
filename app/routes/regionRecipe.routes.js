@@ -10,6 +10,9 @@ module.exports = app => {
     //Retrieve all regions with recipes
     router.get("/", regionRecipes.findRegionRecipes);
 
+    //Retrieve all Regions by country or regionName search
+    router.get("/search", regionRecipes.searchRegionRecipes);
+
     //Retrieve all recipes with regions
     router.get("/recipes", regionRecipes.findRecipeRegions);
 

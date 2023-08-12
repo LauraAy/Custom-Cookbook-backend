@@ -23,9 +23,29 @@ exports.createRegionRecipe = (req, res) => {
       });
     });
 };
-
 //Find all regions with recipes
 exports.findRegionRecipes = (req, res) => {
+  Region.findAll ({
+    include: [ 
+      {
+        model: Recipe,
+        as: "recipe",
+      }],
+    })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+        err.message || "Some error occurred while retrieving the Regions."
+      });
+    });
+  };
+
+
+//Find all regions with recipes
+exports.searchRegionRecipes = (req, res) => {
   const country = req.query.country;
   const regionName = req.query.regionName;
   var countryCondition = country ? { country: { [Op.like]: `%${country}%` } } : null;
