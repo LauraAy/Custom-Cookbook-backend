@@ -1,11 +1,10 @@
 module.exports = app => {
-    const test = require("../controllers/recipeSome.controller.js");
+  const test = require("../controllers/recipeSome.controller.js");
+  var router = require("express").Router();
     
-    var router = require("express").Router();
-    
-    //Retrieve array of recipes by id
-    router.get("/", test.findSome);
+  //Retrieve array of recipes by id
+  router.get("/", test.findSome);
 
 
-    app.use('/api/someRecipes', router);
+app.use('/api/someRecipes', router);
 };

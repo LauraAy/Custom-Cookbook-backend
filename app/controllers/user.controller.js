@@ -74,12 +74,12 @@ User.findByPk(id, { include: ["recipes"] })
 })
 .catch(err => {
   res.status(500).send({
-    message: "Error retrieving Recipe with id=" + id
+    message: "Error retrieving User with id=" + id
   });
 });
 };
 
-// Update a Recipe by the id in the request
+// Update a User by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
