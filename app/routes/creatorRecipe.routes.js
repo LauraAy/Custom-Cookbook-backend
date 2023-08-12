@@ -4,7 +4,7 @@ module.exports = app => {
     
   var router = require("express").Router();
       
-  //Add creator to region
+  //Add creator to recipe
   router.post("/", creatorRecipes.createCreatorRecipe);
 
   //Retreive all Creators with Recipes
@@ -22,7 +22,7 @@ module.exports = app => {
   //Retrieve one Recipe with Creator
   router.get("/recipes/:id", creatorRecipes.findOneRecipeCreator);
     
-  //Delete one region from a recipe
+  //Delete one creator from a recipe
   router.delete("/:recipeId/:creatorId", creatorRecipes.removeCreator);
 
   app.use('/api/creatorRecipes', router);

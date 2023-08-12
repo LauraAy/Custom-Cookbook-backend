@@ -2,8 +2,9 @@ const db = require("../models");
 const Creator = db.creator;
 const Recipe = db.recipe;
 const CreatorRecipe = db.creator_recipe;
+const Op = db.Sequelize.Op;
 
-//Add Creator to Region
+//Add Creator to Recipe
 exports.createCreatorRecipe = (req, res) => {
 
   const creatorRecipe = {
@@ -18,7 +19,7 @@ exports.createCreatorRecipe = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while adding the creator to region."
+          err.message || "Some error occurred while adding the creator to recipe."
       });
     });
 };
@@ -39,7 +40,7 @@ exports.findCreatorRecipes = (req, res) => {
   .catch(err => {
     res.status(500).send({
       message:
-        err.message || "Some error occurred while retrieving the Regions."
+        err.message || "Some error occurred while retrieving the Recipes."
       });
     });
   };
@@ -49,7 +50,7 @@ exports.searchCreatorRecipes = (req, res) => {
   const creatorName = req.query.creatorName;
   var creatorNameCondition = creatorName ? { creatorName: { [Op.like]: `%${creatorName}%` } } : null;
   
-  Region.findAll ({where: {
+  Creator.findAll ({where: {
     [Op.or]: [
       creatorNameCondition
     ]},
@@ -65,7 +66,7 @@ exports.searchCreatorRecipes = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-        err.message || "Some error occurred while retrieving the Regions."
+        err.message || "Some error occurred while retrieving the Creators."
       });
     });
   };
@@ -89,7 +90,7 @@ exports.findOneCreatorRecipe = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-        err.message || "Some error occurred while retrieving the Region."
+        err.message || "Some error occurred while retrieving the Creator."
       });
     });
   };
@@ -159,7 +160,7 @@ exports.findRecipeCreators= (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing region_recipes."
+          err.message || "Some error occurred while removing creator_recipes."
       });
     });  
 }
