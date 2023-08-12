@@ -13,7 +13,10 @@ exports.create = (req, res) => {
     music: req.body.music,
     decor: req.body.decor,
     background: req.body.background,
-    more: req.body.more
+    more: req.body.more,
+    recipeOne: req.body.recipeOne,
+    recipeTwo: req.body.recipeTwo,
+    recipeThree: req.body.recipeThree
   };
 
   // Save Pairing in the database

@@ -26,6 +26,15 @@ module.exports = (sequelize, Sequelize) => {
     },
     more: {
       type: Sequelize.TEXT
+    },
+    recipeOne: {
+      type: Sequelize.INTEGER
+    },
+    recipeTwo: {
+      type: Sequelize.INTEGER
+    },
+    recipeThree: {
+      type: Sequelize.INTEGER
     }
   });
 

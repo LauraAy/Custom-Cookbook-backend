@@ -56,6 +56,7 @@ require('./app/routes/regionRecipe.routes')(app);
 require('./app/routes/pairing.routes')(app);
 require('./app/routes/pairingRecipe.routes')(app);
 require('./app/routes/everything.routes')(app);
+require('./app/routes/recipeSome.routes')(app);
 
 function initial() {
   Role.create({

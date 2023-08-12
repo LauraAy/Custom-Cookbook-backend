@@ -2,8 +2,9 @@ const db = require("../models");
 const Creator = db.creator;
 const Recipe = db.recipe;
 const CreatorRecipe = db.creator_recipe;
+const Op = db.Sequelize.Op;
 
-//Add Creator to Region
+//Add Creator to Recipe
 exports.createCreatorRecipe = (req, res) => {
 
   const creatorRecipe = {
@@ -18,7 +19,7 @@ exports.createCreatorRecipe = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while adding the creator to region."
+          err.message || "Some error occurred while adding the creator to recipe."
       });
     });
 };
@@ -26,22 +27,48 @@ exports.createCreatorRecipe = (req, res) => {
 //Find all creators with recipes
 exports.findCreatorRecipes = (req, res) => {
   Creator.findAll ({
-       include: [ 
-       {
+    include: [ 
+    {
+      model: Recipe,
+      as: "recipe",
+      attributes: ['title']
+    }],
+  })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving the Recipes."
+      });
+    });
+  };
+
+  //Find all creators with recipes by creatorName
+exports.searchCreatorRecipes = (req, res) => {
+  const creatorName = req.query.creatorName;
+  var creatorNameCondition = creatorName ? { creatorName: { [Op.like]: `%${creatorName}%` } } : null;
+  
+  Creator.findAll ({where: {
+    [Op.or]: [
+      creatorNameCondition
+    ]},
+    include: [ 
+      {
         model: Recipe,
         as: "recipe",
-        attributes: ['title']
       }],
-})
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving the Regions."
-        });
+    })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+        err.message || "Some error occurred while retrieving the Creators."
       });
+    });
   };
 
 
@@ -50,23 +77,23 @@ exports.findOneCreatorRecipe = (req, res) => {
   const id = req.params.id;
 
   Creator.findByPk(id, {
-   include: [ 
+    include: [ 
       {
-       model: Recipe,
-       as: "recipe",
-       attributes: ['title']
-     }],
-  })
-  .then(data => {
-    res.send(data);
-  })
-  .catch(err => {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving the Region."
+        model: Recipe,
+        as: "recipe",
+        attributes: ['title']
+      }],
+    })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+        err.message || "Some error occurred while retrieving the Creator."
+      });
     });
-  });
-};
+  };
     
 //Find all Recipes with Creators
 exports.findRecipeCreators= (req, res) => {
@@ -133,7 +160,7 @@ exports.findRecipeCreators= (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing region_recipes."
+          err.message || "Some error occurred while removing creator_recipes."
       });
     });  
 }

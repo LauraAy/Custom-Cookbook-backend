@@ -97,5 +97,4 @@ exports.findAllRecipePairings= (req, res) => {
             res.sendStatus(200);
         }).catch(e => console.log(e));
     }
-
     

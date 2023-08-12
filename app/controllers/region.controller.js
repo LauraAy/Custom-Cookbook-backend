@@ -1,5 +1,6 @@
 const db = require("../models");
 const Region = db.region;
+const Op = db.Sequelize.Op;
 
 // Create and Save a new Region
 exports.create = (req, res) => {
@@ -63,8 +64,48 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Retrieve all Regions from the database with options to retrieve by country or regionName.
+exports.findAll = (req, res) => {
+  
+  Region.findAll()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Regions."
+      });
+    });
+};
 
-// Update a Recipe by the id in the request
+
+// Retrieve all Regions from the database with options to retrieve by country or regionName.
+exports.searchAll = (req, res) => {
+  const country = req.query.country;
+  const regionName = req.query.regionName;
+  var countryCondition = country ? { country: { [Op.like]: `%${country}%` } } : null;
+  var regionCondition = regionName ? { regionName: { [Op.like]: `%${regionName}%` } } : null;
+
+  Region.findAll({ where: {
+    [Op.or]: [
+      countryCondition,
+      regionCondition
+    ]
+    } 
+   })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Regions."
+      });
+    });
+};
+
+// Update a Region by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 

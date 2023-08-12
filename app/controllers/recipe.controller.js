@@ -37,7 +37,21 @@ Recipe.create(recipe)
     });
 };
 
-// Retrieve all Recipes from the database.
+// Retrieve all Regions from the database.
+exports.findAll = (req, res) => {
+  Region.findAll ()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Recipes."
+      });
+    });
+};
+
+// Retrieve all Recipes from the database by title.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
@@ -53,6 +67,8 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+
 
 // Find a single Recipe with an id
 exports.findOne = (req, res) => {
@@ -145,6 +161,26 @@ exports.deleteAll = (req, res) => {
 // find all published Recipes
 exports.findAllPublished = (req, res) => {
   Recipe.findAll({ where: { published: true } })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Recipes."
+      });
+    });
+};
+
+// Retrieve array of Recipes from the database by pk.
+exports.findSome = (req, res) => {
+  const recipeOne = req.body.recipeOne
+  const recipeTwo = req.body.recipeTwo
+  const recipeThree = req.body.recipeThree
+
+  Recipe.findAll ({
+    where: {[Op.and]: [{ id: recipeOne}, { id: recipeTwo},{ id: recipeThree}]} 
+  })
     .then(data => {
       res.send(data);
     })
