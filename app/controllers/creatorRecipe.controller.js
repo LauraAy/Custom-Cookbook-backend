@@ -26,22 +26,48 @@ exports.createCreatorRecipe = (req, res) => {
 //Find all creators with recipes
 exports.findCreatorRecipes = (req, res) => {
   Creator.findAll ({
-       include: [ 
-       {
+    include: [ 
+    {
+      model: Recipe,
+      as: "recipe",
+      attributes: ['title']
+    }],
+  })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving the Regions."
+      });
+    });
+  };
+
+  //Find all creators with recipes by creatorName
+exports.searchCreatorRecipes = (req, res) => {
+  const creatorName = req.query.creatorName;
+  var creatorNameCondition = creatorName ? { creatorName: { [Op.like]: `%${creatorName}%` } } : null;
+  
+  Region.findAll ({where: {
+    [Op.or]: [
+      creatorNameCondition
+    ]},
+    include: [ 
+      {
         model: Recipe,
         as: "recipe",
-        attributes: ['title']
       }],
-})
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving the Regions."
-        });
+    })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+        err.message || "Some error occurred while retrieving the Regions."
       });
+    });
   };
 
 
@@ -50,23 +76,23 @@ exports.findOneCreatorRecipe = (req, res) => {
   const id = req.params.id;
 
   Creator.findByPk(id, {
-   include: [ 
+    include: [ 
       {
-       model: Recipe,
-       as: "recipe",
-       attributes: ['title']
-     }],
-  })
-  .then(data => {
-    res.send(data);
-  })
-  .catch(err => {
-    res.status(500).send({
-      message:
+        model: Recipe,
+        as: "recipe",
+        attributes: ['title']
+      }],
+    })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
         err.message || "Some error occurred while retrieving the Region."
+      });
     });
-  });
-};
+  };
     
 //Find all Recipes with Creators
 exports.findRecipeCreators= (req, res) => {

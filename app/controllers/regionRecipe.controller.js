@@ -44,7 +44,7 @@ exports.findRegionRecipes = (req, res) => {
   };
 
 
-//Find all regions with recipes
+//Find all regions with recipes by country or regionName
 exports.searchRegionRecipes = (req, res) => {
   const country = req.query.country;
   const regionName = req.query.regionName;
