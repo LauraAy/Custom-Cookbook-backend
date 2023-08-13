@@ -60,7 +60,7 @@ exports.searchCreatorRecipes = (req, res) => {
         as: "recipe",
       }],
     })
-    .then(data => {
+    .then(data => { 
       res.send(data);
     })
     .catch(err => {
