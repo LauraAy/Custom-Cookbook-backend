@@ -7,6 +7,9 @@ module.exports = app => {
     
     //Retrieve all Recipes by user id with title search
     router.get("/creatorSearch/:id", UserRecipes.findUserRecipesCreator);
-  
+
+    //Retrieve all Recipes by user id with title search
+    router.get("/regionSearch/:id", UserRecipes.findUserRecipesRegion);
+
   app.use('/api/userRecipes', router);
   };
