@@ -59,26 +59,6 @@ exports.findAll = (req, res) => {
       });
   };
 
-//Find recipes with userId
-exports.findUserRecipes= (req, res) => {
-    const id = req.params.id;
-User.findByPk(id, { include: ["recipes"] })
-.then(data => {
-  if (data) {
-    res.send(data);
-  } else {
-    res.status(404).send({
-      message: `Cannot find User with id=${id}.`
-    });
-  }
-})
-.catch(err => {
-  res.status(500).send({
-    message: "Error retrieving User with id=" + id
-  });
-});
-};
-
 // Update a User by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
