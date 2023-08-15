@@ -9,9 +9,6 @@ router.get("/", users.findAll);
 //Retrieve user with id
 router.get("/:id", users.findOne);
 
-//Retrieve recipes with user id
-router.get("/recipes/:id", users.findUserRecipes)
-
 //Update a User with id
 router.put("/:id", users.update);
 
