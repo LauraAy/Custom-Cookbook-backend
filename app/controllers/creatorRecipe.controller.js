@@ -31,7 +31,6 @@ exports.findCreatorRecipes = (req, res) => {
     {
       model: Recipe,
       as: "recipe",
-      attributes: ['title']
     }],
   })
   .then(data => {
