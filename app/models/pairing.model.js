@@ -15,6 +15,9 @@ module.exports = (sequelize, Sequelize) => {
     shows: {
       type: Sequelize.TEXT
     },
+    games: {
+      type: Sequelize.TEXT
+    },
     books: {
       type: Sequelize.TEXT
     },

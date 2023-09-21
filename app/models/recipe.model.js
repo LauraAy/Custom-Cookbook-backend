@@ -15,11 +15,17 @@ module.exports = (sequelize, Sequelize) => {
     servingSize: {
       type: Sequelize.INTEGER
     },
+    prepTime: {
+      type: Sequelize.STRING
+    },
+    cookTime: {
+      type: Sequelize.STRING
+    },
     ingredients: {
-      type: Sequelize.TEXT
+      type: Sequelize.JSON
     },
     directions: {
-      type: Sequelize.TEXT
+      type: Sequelize.JSON
     },
     source: {
       type: Sequelize.TEXT
