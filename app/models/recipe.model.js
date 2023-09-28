@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false
     },
     description: {
-      type: Sequelize.STRING
+      type: Sequelize.TEXT
     },
     recipeType: {
       type: Sequelize.STRING
@@ -22,10 +22,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     },
     ingredients: {
-      type: Sequelize.JSON
+      type: Sequelize.TEXT
     },
     directions: {
-      type: Sequelize.JSON
+      type: Sequelize.TEXT
     },
     source: {
       type: Sequelize.TEXT
