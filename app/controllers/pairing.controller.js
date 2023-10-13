@@ -9,6 +9,7 @@ exports.create = (req, res) => {
     description: req.body.description,
     drinks: req.body.drinks,
     shows: req.body.shows,
+    games: req.body.games,
     books: req.body.books,
     music: req.body.music,
     decor: req.body.decor,

@@ -7,13 +7,19 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false
     },
     description: {
-      type: Sequelize.STRING
+      type: Sequelize.TEXT
     },
     recipeType: {
       type: Sequelize.STRING
     },
     servingSize: {
       type: Sequelize.INTEGER
+    },
+    prepTime: {
+      type: Sequelize.STRING
+    },
+    cookTime: {
+      type: Sequelize.STRING
     },
     ingredients: {
       type: Sequelize.TEXT

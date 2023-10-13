@@ -78,11 +78,10 @@ exports.findOneRegionRecipe = (req, res) => {
         const id = req.params.id;
       
         Region.findByPk(id, {
-        attributes: ["country", "regionName"], include: [ 
+        include: [ 
          {
           model: Recipe,
           as: "recipe",
-          attributes: ['title']
         }],
   })
         .then(data => {
