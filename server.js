@@ -2,8 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
+require("dotenv").config();
+
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: process.env.CLIENT_ORIGIN || "http://localhost:8081"
 };
 
 app.use(cors(corsOptions));
@@ -32,13 +34,6 @@ db.sequelize.sync()
   });
   // initial();
   // run();
-
-
-
-// // drop the table if it already exists
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
 
 // simple route
 app.get("/", (req, res) => {
@@ -77,7 +72,7 @@ function initial() {
 }
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.NODE_DOCKER_PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
